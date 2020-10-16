@@ -105,6 +105,7 @@ def ally_dfs(board, i, j):
             if ally not in stack and ally not in ally_members:
                 stack.append(ally)
     return ally_members
+    print()
 
 
 def find_all_liberties(board, i, j):
