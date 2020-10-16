@@ -6,7 +6,7 @@ from write import writeOutput
 import random
 
 BOARD_SIZE = 5
-DEPTH = 4  # minimax tree depth
+DEPTH = 3  # minimax tree depth
 
 EMPTY_BOARD = [[0 for x in range(BOARD_SIZE)] for y in range(BOARD_SIZE)]
 CHILD_ITER = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE)]
@@ -63,6 +63,7 @@ def game_is_over(node):
         return True
     return False
 
+
 def opponent_last_move(board1, board2):
     diff = np.subtract(board1, board2)
     non_zero = np.nonzero(diff)
@@ -71,14 +72,16 @@ def opponent_last_move(board1, board2):
     else:
         return non_zero[0][0], non_zero[1][0]
 
+
 def detect_neighbor(board, i, j):
     neighbors = []
     # Detect borders and add neighbor coordinates
-    if i > 0: neighbors.append((i-1, j))
-    if i < len(board) - 1: neighbors.append((i+1, j))
-    if j > 0: neighbors.append((i, j-1))
-    if j < len(board) - 1: neighbors.append((i, j+1))
+    if i > 0: neighbors.append((i - 1, j))
+    if i < len(board) - 1: neighbors.append((i + 1, j))
+    if j > 0: neighbors.append((i, j - 1))
+    if j < len(board) - 1: neighbors.append((i, j + 1))
     return neighbors
+
 
 def detect_neighbor_ally(board, i, j):
     neighbors = detect_neighbor(board, i, j)  # Detect neighbors
@@ -89,6 +92,7 @@ def detect_neighbor_ally(board, i, j):
         if board[piece[0]][piece[1]] == board[i][j]:
             group_allies.append(piece)
     return group_allies
+
 
 def ally_dfs(board, i, j):
     stack = [(i, j)]  # stack for DFS serach
@@ -101,6 +105,7 @@ def ally_dfs(board, i, j):
             if ally not in stack and ally not in ally_members:
                 stack.append(ally)
     return ally_members
+
 
 def find_all_liberties(board, i, j):
     """
@@ -121,6 +126,7 @@ def find_all_liberties(board, i, j):
     # If none of the pieces in a allied group has an empty space, it has no liberty
     return liberties
 
+
 def minimax_pruning(node, depth, is_maximizing, alpha, beta):
     """
     :param node: current node
@@ -131,12 +137,6 @@ def minimax_pruning(node, depth, is_maximizing, alpha, beta):
     :param beta:
     :return:
     """
-    if node.go_board.n_move < 10:
-        last_move = opponent_last_move(node.go_board.previous_board, node.go_board.board)
-        places = find_all_liberties(node.go_board.board, last_move[0], last_move[1])
-    else:
-        places = CHILD_ITER
-    random.shuffle(places)
 
     if game_is_over(node) or depth >= DEPTH:
         if is_maximizing:
@@ -148,9 +148,18 @@ def minimax_pruning(node, depth, is_maximizing, alpha, beta):
                 u_val = 100
             else:
                 u_val = -100
-        else:   # game is not over yet, using heuristic evaluation
+        else:  # game is not over yet, using heuristic evaluation
             u_val = node.go_board.score(my_player) - node.go_board.score(3 - my_player)
         return u_val, None  # utility function of the leaf
+
+    if node.go_board.n_move < 10:
+        last_move = opponent_last_move(node.go_board.previous_board, node.go_board.board)
+        places = find_all_liberties(node.go_board.board, last_move[0], last_move[1])
+        places.append((-1, -1))
+    else:
+        places = CHILD_ITER
+    random.shuffle(places)
+    # print(places)
 
     if is_maximizing:
         bestVal = -maxsize
@@ -228,7 +237,7 @@ def read_n_moves(path="n_moves.txt"):
 if __name__ == "__main__":
     N = 5
     piece_type, previous_board, board = readInput(N, "input.txt")
-    #piece_type, previous_board, board = readInput(N, "init/input.txt")
+    # piece_type, previous_board, board = readInput(N, "init/input.txt")
     # print(opponent_last_move(previous_board, board))
     go = GO(BOARD_SIZE)
     go.set_board(piece_type, previous_board, board)
@@ -255,7 +264,7 @@ if __name__ == "__main__":
 
     # print(n_moves)
 
-    # 
+    #
     if action is None:
         first_node = Node(go, piece_type)
         retVal, move = minimax_pruning(first_node, 0, True, -maxsize, maxsize)
@@ -286,5 +295,5 @@ if __name__ == "__main__":
     #                 go_copy = go.copy_board()
     #                 go_copy.place_chess(i, j)
 
-    if retVal:
+    if retVal is not None:
         print(retVal, move)
