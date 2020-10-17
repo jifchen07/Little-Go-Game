@@ -165,13 +165,13 @@ def minimax_pruning(node, depth, is_maximizing, alpha, beta):
             my_player = node.player  # my player is always the max player
         else:
             my_player = 3 - node.player
-        if game_is_over(node):
-            if node.go_board.judge_winner() == my_player:
-                u_val = 100
-            else:
-                u_val = -100
-        else:  # game is not over yet, using heuristic evaluation
-            u_val = node.go_board.score(my_player) - node.go_board.score(3 - my_player)
+        # if game_is_over(node):
+        #     if node.go_board.judge_winner() == my_player:
+        #         u_val = 100
+        #     else:
+        #         u_val = -100
+        # else:  # game is not over yet, using heuristic evaluation
+        u_val = node.go_board.score(my_player) - node.go_board.score(3 - my_player)
         return u_val, None  # utility function of the leaf
 
     if node.go_board.n_move < 10:
@@ -260,7 +260,7 @@ def read_n_moves(path="n_moves.txt"):
 
 if __name__ == "__main__":
     N = 5
-    piece_type, previous_board, board = readInput(N, "input.txt")
+    piece_type, previous_board, board = readInput(N)
     # piece_type, previous_board, board = readInput(N, "init/input.txt")
     # print(opponent_last_move(previous_board, board))
     go = GO(BOARD_SIZE)

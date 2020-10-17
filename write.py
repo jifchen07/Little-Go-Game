@@ -19,7 +19,7 @@ def writePass(path="output.txt"):
 	with open(path, 'w') as f:
 		f.write("PASS")
 
-def writeNextInput(piece_type, previous_board, board, path="input.txt"):
+def writeNextInput(piece_type, previous_board, board, path="input1.txt"):
 	res = ""
 	res += str(piece_type) + "\n"
 	for item in previous_board:
