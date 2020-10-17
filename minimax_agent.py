@@ -6,10 +6,11 @@ from write import writeOutput
 import random
 
 BOARD_SIZE = 5
-DEPTH = 3  # minimax tree depth
+DEPTH = 4  # minimax tree depth
 
 EMPTY_BOARD = [[0 for x in range(BOARD_SIZE)] for y in range(BOARD_SIZE)]
-CHILD_ITER = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE)]
+ALL_PLACES = [(i, j) for i in range(BOARD_SIZE) for j in range(BOARD_SIZE)]
+CHILD_ITER = ALL_PLACES.copy()
 CHILD_ITER.append((-1, -1))
 
 
@@ -105,6 +106,7 @@ def ally_dfs(board, i, j):
             if ally not in stack and ally not in ally_members:
                 stack.append(ally)
     return ally_members
+    print()
 
 
 def find_all_liberties(board, i, j):
@@ -126,6 +128,26 @@ def find_all_liberties(board, i, j):
     # If none of the pieces in a allied group has an empty space, it has no liberty
     return liberties
 
+
+def find_player_liberties(board, player):
+    """
+    :param board:
+    :param player:
+    :return: a set of all liberty places surrounding the player's stones on the board
+    """
+    explored = set()
+    all_liberties = set()
+    for place in ALL_PLACES:
+        if place in explored:
+            continue
+        if board[place[0]][place[1]] == player:
+            explored.add(place)
+            neighbors = set(ally_dfs(board, place[0], place[1]))
+            explored.update(neighbors)
+            liberties = set(find_all_liberties(board, place[0], place[1]))
+            all_liberties.update(liberties)
+
+    return all_liberties
 
 def minimax_pruning(node, depth, is_maximizing, alpha, beta):
     """
@@ -153,12 +175,14 @@ def minimax_pruning(node, depth, is_maximizing, alpha, beta):
         return u_val, None  # utility function of the leaf
 
     if node.go_board.n_move < 10:
-        last_move = opponent_last_move(node.go_board.previous_board, node.go_board.board)
-        places = find_all_liberties(node.go_board.board, last_move[0], last_move[1])
-        places.append((-1, -1))
+        # last_move = opponent_last_move(node.go_board.previous_board, node.go_board.board)
+        # places = find_all_liberties(node.go_board.board, last_move[0], last_move[1])
+        places = find_player_liberties(node.go_board.board, 3 - node.player)
+        places.add((-1, -1))
     else:
         places = CHILD_ITER
-    random.shuffle(places)
+        random.shuffle(places)
+
     # print(places)
 
     if is_maximizing:
