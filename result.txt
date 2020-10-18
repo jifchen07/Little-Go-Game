@@ -1,35 +1,34 @@
-
-[Executed at: Sat Oct 17 0:34:59 PDT 2020]
+[Executed at: Sat Oct 17 16:58:21 PDT 2020]
 
 Programming language...
 PY3
 
-Sat Oct 17 00:23:19 PDT 2020
+Sat Oct 17 16:42:40 PDT 2020
 
 Playing with random_player...
-Sat Oct 17 00:23:19 PDT 2020
+Sat Oct 17 16:42:40 PDT 2020
 =====Summary=====
-You play as Black Player | Win: 7 | Lose: 3 | Tie: 0
+You play as Black Player | Win: 10 | Lose: 0 | Tie: 0
 You play as White Player | Win: 10 | Lose: 0 | Tie: 0
 
 Playing with greedy_player...
-Sat Oct 17 00:27:04 PDT 2020
+Sat Oct 17 16:51:02 PDT 2020
 =====Summary=====
-You play as Black Player | Win: 6 | Lose: 4 | Tie: 0
+You play as Black Player | Win: 9 | Lose: 1 | Tie: 0
 You play as White Player | Win: 10 | Lose: 0 | Tie: 0
 
 Playing with aggressive_player...
-Sat Oct 17 00:31:15 PDT 2020
+Sat Oct 17 16:54:25 PDT 2020
 =====Summary=====
-You play as Black Player | Win: 1 | Lose: 9 | Tie: 0
-You play as White Player | Win: 7 | Lose: 3 | Tie: 0
+You play as Black Player | Win: 4 | Lose: 6 | Tie: 0
+You play as White Player | Win: 9 | Lose: 1 | Tie: 0
 
 Result:
-Random win rate: 0.85
-Greedy win rate: 0.8
-Aggressive win rate: 0.4
+Random win rate: 1
+Greedy win rate: 0.95
+Aggressive win rate: 0.65
 
 Mission Completed.
-Sat Oct 17 00:34:57 PDT 2020
+Sat Oct 17 16:58:16 PDT 2020
 
 Check history.log under your submission folder for more details.

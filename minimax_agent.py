@@ -29,28 +29,28 @@ class Node:
         self.go_board = go_board
         # self.child_nodes = []
         self.player = player
-        self.action = "MOVE"
+        # self.action = "MOVE"
         self.move = None  # next move: (x, y);
         self.parent = parent
 
 
-class Board:
-    def __init__(self, state=None):
-        if state is None:
-            self.state = np.zeros((BOARD_SIZE, BOARD_SIZE), dtype=np.int)
-        else:
-            self.state = state.copy()
-
-
-class MinimaxTree:
-    """
-    max_depth is the
-    """
-
-    def __init__(self, max_depth, root, player):
-        self.maxDepth = max_depth
-        self.root = root
-        self.player = player
+# class Board:
+#     def __init__(self, state=None):
+#         if state is None:
+#             self.state = np.zeros((BOARD_SIZE, BOARD_SIZE), dtype=np.int)
+#         else:
+#             self.state = state.copy()
+#
+#
+# class MinimaxTree:
+#     """
+#     max_depth is the
+#     """
+#
+#     def __init__(self, max_depth, root, player):
+#         self.maxDepth = max_depth
+#         self.root = root
+#         self.player = player
 
 
 def game_is_over(node):
@@ -180,7 +180,12 @@ def minimax_pruning(node, depth, is_maximizing, alpha, beta):
         places = find_player_liberties(node.go_board.board, 3 - node.player)
         places.add((-1, -1))
     else:
-        places = CHILD_ITER
+        places = []
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):
+                if node.go_board.board[i][j] == 0:
+                    places.append((i, j))
+        places.append((-1, -1))
         random.shuffle(places)
 
     # print(places)
@@ -286,7 +291,7 @@ if __name__ == "__main__":
         n_moves = read_n_moves() + 1
         go.n_move = n_moves
 
-    # print(n_moves)
+    print("n of moves", n_moves)
 
     #
     if action is None:
