@@ -171,7 +171,10 @@ def minimax_pruning(node, depth, is_maximizing, alpha, beta):
         #     else:
         #         u_val = -100
         # else:  # game is not over yet, using heuristic evaluation
-        u_val = node.go_board.score(my_player) - node.go_board.score(3 - my_player)
+        player_liberty = len(find_player_liberties(node.go_board.board, node.player))
+        opponent_liberty = len(find_player_liberties(node.go_board.board, 3 - node.player))
+        u_val = 100*(node.go_board.score(my_player) - node.go_board.score(3 - my_player)) \
+            + player_liberty - opponent_liberty
         return u_val, None  # utility function of the leaf
 
     if node.go_board.n_move < 10:
