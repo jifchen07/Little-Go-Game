@@ -1,0 +1,25 @@
+
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/myplayer_play.iml
+.idea/vcs.xml
+__pycache__/host.cpython-36.pyc
+__pycache__/host.cpython-37.pyc
+__pycache__/read.cpython-36.pyc
+__pycache__/read.cpython-37.pyc
+__pycache__/write.cpython-36.pyc
+__pycache__/write.cpython-37.pyc
+init/input.txt
+input.txt
+inputs/input1.txt
+inputs/input2.txt
+inputs/input3.txt
+inputs/input_pass.txt
+minimax_QLearner.py
+output.txt
+QTables.pickle
+result.txt
+submission results/sub-13.txt
+submission results/sub-18.txt
